@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * The scanner of the package.
@@ -47,7 +46,7 @@ public class FileScanner {
     /**
      * The FileScanner construction, if the target path is null or length == 0, the
      * inner method will do nothing, such as doScan.
-     *
+     * <p>
      * If the file is not directory, it will set the target file's parent file
      * directory. For this part like {@code public FileScanner(FIle TargetPackage)}.
      *
@@ -58,34 +57,41 @@ public class FileScanner {
             this.targetFile = null;
         } else {
             File targetFile = new File(targetPath);
-            if(targetFile.exists()){
+            if (targetFile.exists()) {
                 this.targetFile = targetFile.isDirectory() ? targetFile : targetFile.getParentFile();
             }
         }
     }
 
-    public List<String> doScan(FileScannerFilterInterface filter){
+    /**
+     * scan the target file from the construction. The filter will block all types
+     * of files, such as directories and files.
+     *
+     * @param filter the filter to block files.
+     * @return the target file's all son files.
+     */
+    public List<String> doScan(FileScannerFilterInterface filter) {
         List<String> r = new ArrayList<>();
-        if(targetFile == null){
+        if (targetFile == null) {
             return r;
         }
-        if(filter == null){
-            filter = (file)->true;
+        if (filter == null) {
+            filter = (file) -> true;
         }
 
         LinkedList<File> files = new LinkedList<>();
         files.addLast(targetFile);
-        while (!files.isEmpty()){
+        while (!files.isEmpty()) {
             File dir = files.poll();
             File[] sons = dir.listFiles();
-            if(sons == null){
+            if (sons == null) {
                 continue;
             }
-            for(File file : sons){
-                if(filter.canPass(file)){
-                    if(file.isDirectory()){
+            for (File file : sons) {
+                if (filter.canPass(file)) {
+                    if (file.isDirectory()) {
                         files.addLast(file);
-                    }else {
+                    } else {
                         r.add(file.getAbsolutePath());
                     }
                 }
