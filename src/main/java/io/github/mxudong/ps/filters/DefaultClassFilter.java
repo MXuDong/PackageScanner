@@ -15,6 +15,7 @@ import java.io.File;
  */
 
 public class DefaultClassFilter implements FileScannerFilterInterface {
+    @Override
     public boolean canPass(File file) {
         if(file == null){
             return false;

@@ -1,8 +1,12 @@
 package io.github.mxudong.ps;
 
+import io.github.mxudong.ps.filters.FileScannerFilterInterface;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The scanner of the package.
@@ -18,7 +22,7 @@ import java.util.List;
  */
 
 public class FileScanner {
-    private File targetPackage;
+    private File targetFile;
 
     /**
      * Default construction. Receive the type of File. And if file is
@@ -31,12 +35,12 @@ public class FileScanner {
      * @param targetDirectory the file path of scanner start.
      */
     public FileScanner(File targetDirectory) {
-        // the targetPackage is not null and the file is exists
+        // the targetFile is not null and the file is exists
         if (targetDirectory != null && targetDirectory.exists()) {
             // different type in directory and file.
-            this.targetPackage = targetDirectory.isDirectory() ? targetDirectory : targetDirectory.getParentFile();
+            this.targetFile = targetDirectory.isDirectory() ? targetDirectory : targetDirectory.getParentFile();
         } else {
-            this.targetPackage = null;
+            this.targetFile = null;
         }
     }
 
@@ -51,12 +55,42 @@ public class FileScanner {
      */
     public FileScanner(String targetPath) {
         if (null == targetPath || targetPath.length() == 0) {
-            this.targetPackage = null;
+            this.targetFile = null;
         } else {
             File targetFile = new File(targetPath);
             if(targetFile.exists()){
-                this.targetPackage = targetFile.isDirectory() ? targetFile : targetFile.getParentFile();
+                this.targetFile = targetFile.isDirectory() ? targetFile : targetFile.getParentFile();
             }
         }
+    }
+
+    public List<String> doScan(FileScannerFilterInterface filter){
+        List<String> r = new ArrayList<>();
+        if(targetFile == null){
+            return r;
+        }
+        if(filter == null){
+            filter = (file)->true;
+        }
+
+        LinkedList<File> files = new LinkedList<>();
+        files.addLast(targetFile);
+        while (!files.isEmpty()){
+            File dir = files.poll();
+            File[] sons = dir.listFiles();
+            if(sons == null){
+                continue;
+            }
+            for(File file : sons){
+                if(filter.canPass(file)){
+                    if(file.isDirectory()){
+                        files.addLast(file);
+                    }else {
+                        r.add(file.getAbsolutePath());
+                    }
+                }
+            }
+        }
+        return r;
     }
 }
