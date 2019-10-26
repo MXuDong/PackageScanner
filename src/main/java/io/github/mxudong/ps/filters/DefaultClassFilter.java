@@ -14,13 +14,18 @@ import java.io.File;
  * @see FileScannerFilterInterface
  */
 
-public class DefaultClassFilter implements FileScannerFilterInterface {
+public class DefaultClassFilter implements NameFilterForScannerInterface{
     @Override
     public boolean canPass(File file) {
         if(file == null){
             return false;
         }
 
-        return file.isDirectory() || file.getName().endsWith(".class");
+        return file.isDirectory() || ;
+    }
+
+    @Override
+    public boolean canAccess(String name) {
+        return name.endsWith(".class");
     }
 }
