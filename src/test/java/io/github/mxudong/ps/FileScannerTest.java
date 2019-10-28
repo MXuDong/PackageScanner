@@ -14,5 +14,7 @@ public class FileScannerTest {
             System.out.println(s);
         }
 
+        System.out.println(FileScannerTest.class.getPackage().getName());
+        System.out.println(Thread.currentThread().getContextClassLoader().getResource(FileScannerTest.class.getPackage().getName().replace(".", "/")));
     }
 }
