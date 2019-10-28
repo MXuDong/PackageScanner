@@ -21,7 +21,7 @@ public class DefaultClassFilter implements NameFilterForScannerInterface{
             return false;
         }
 
-        return file.isDirectory() || ;
+        return file.isDirectory() || canAccess(file.getName());
     }
 
     @Override

@@ -3,8 +3,11 @@ package io.github.mxudong.ps.filters;
 import java.io.File;
 
 /**
+ * The file filter for FileScanner.
+ *
  * @author Dong
  * @since 1.0.0
+ * @see io.github.mxudong.ps.FileScanner
  */
 public interface FileScannerFilterInterface {
 
