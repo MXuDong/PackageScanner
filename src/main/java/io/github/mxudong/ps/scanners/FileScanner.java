@@ -64,19 +64,27 @@ public class FileScanner {
     }
 
     /**
-     * scan the target file from the construction. The filter will block all types
+     * scan the target file from the construction. The filters will block all types
      * of files, such as directories and files.
+     * <p>
+     * For all filter in filters, the logical operation is {@code OR}, so if at least
+     * one filter can access the file, the file will be access. If the program need
+     * the logical operation is {@code AND}, it need create the new filer from the
+     * FileScannerFilterInterface to make all filter check the file for result by
+     * {@code AND}
      *
-     * @param filter the filter to block files.
+     * @param filters the filters to block files.
      * @return the target file's all son files.
      */
-    public List<String> doScan(FileScannerFilterInterface filter) {
+    public List<String> doScan(FileScannerFilterInterface... filters) {
         List<String> r = new ArrayList<>();
         if (targetFile == null) {
             return r;
         }
-        if (filter == null) {
-            filter = (file) -> true;
+
+        if (filters == null || filters.length == 0) {
+            filters = new FileScannerFilterInterface[1];
+            filters[0] = (file) -> true;
         }
 
         LinkedList<File> files = new LinkedList<>();
@@ -88,11 +96,15 @@ public class FileScanner {
                 continue;
             }
             for (File file : sons) {
-                if (filter.canPass(file)) {
-                    if (file.isDirectory()) {
-                        files.addLast(file);
-                    } else {
-                        r.add(file.getAbsolutePath());
+                for (FileScannerFilterInterface fsfi : filters) {
+                    if (fsfi.canAccess(file)) {
+                        if (file.isDirectory()) {
+                            files.addLast(file);
+                        } else {
+                            r.add(file.getAbsolutePath());
+                        }
+
+                        break;
                     }
                 }
             }

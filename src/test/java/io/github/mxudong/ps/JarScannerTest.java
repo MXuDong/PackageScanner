@@ -1,6 +1,5 @@
 package io.github.mxudong.ps;
 
-import io.github.mxudong.ps.filters.DefaultClassFilter;
 import io.github.mxudong.ps.scanners.JarScanner;
 import org.junit.Test;
 

@@ -1,5 +1,9 @@
 package io.github.mxudong.ps;
 
+import io.github.mxudong.ps.filters.FileScannerFilterInterface;
+import io.github.mxudong.ps.filters.JarScannerFilterInterface;
+import io.github.mxudong.ps.scanners.FileScanner;
+
 /**
  * This class provide some method for package scan in JAVA. Use this
  * class, the program can quick get target class which want.
@@ -31,16 +35,32 @@ public class PackageScanner {
      * and other construction can receive the filter.
      *
      * @param targetClasses The target classes
-     * @see io.github.mxudong.ps.filters.DefaultClassFilter
      */
     public PackageScanner(Class... targetClasses) {
 
     }
+
+    public PackageScanner(JarScannerFilterInterface jsfi,
+                          FileScannerFilterInterface fsfi,
+                          Class... targetClasses) {
+
+
+    }
+
+    public PackageScanner(String ... FilesPath){
+
+    }
+
+    public PackageScanner(FileScannerFilterInterface fsfi, String... FilesPath){
+
+    }
+
+
 }
 
 /**
  * The inner class for PackageScanner scan the files.
  */
-class JarScanner{
+class JarScanner {
 
 }

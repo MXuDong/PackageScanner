@@ -62,20 +62,35 @@ public class JarScanner {
     }
 
     /**
-     * scan the target jar file from the construction. The filter
+     * scan the target jar file from the construction. The filters
      * will block all types of files, such as directories and files.
+     * <p>
+     * For all filter in filters, the logical operation is {@code OR},
+     * so if at least one filter can access the jar entry, the jar
+     * entry will be access. If the program need the logical operation
+     * is {@code AND}, it need create the new filer from the
+     * JarScannerFilterInterface to make all filter check the file for
+     * result by {@code AND}
      *
-     * @param filter the filter to block files.
+     * @param filters the filters to block files.
      * @return the jar file
+     * @see JarScannerFilterInterface
      */
-    public List<JarEntry> doScan(JarScannerFilterInterface filter) {
+    public List<JarEntry> doScan(JarScannerFilterInterface... filters) {
         List<JarEntry> r = new ArrayList<>();
         Enumeration<JarEntry> enumeration = this.targetJarFile.entries();
 
+        if (filters == null) {
+            filters = new JarScannerFilterInterface[1];
+            filters[0] = (o) -> true;
+        }
+
         while (enumeration.hasMoreElements()) {
             JarEntry jarEntry = enumeration.nextElement();
-            if (filter.canAccess(jarEntry)) {
-                r.add(jarEntry);
+            for (JarScannerFilterInterface jsfi : filters) {
+                if (jsfi.canAccess(jarEntry)) {
+                    r.add(jarEntry);
+                }
             }
         }
 

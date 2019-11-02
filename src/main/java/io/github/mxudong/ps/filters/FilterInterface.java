@@ -1,27 +1,32 @@
 package io.github.mxudong.ps.filters;
 
 /**
- * The all filer's must implements this interface in the PackageScanner
- * framework. The programmer can implement this class to provide other
- * features.
- * <p>
- * If some class implements from the ScannerInterface, it batter to
- * create the class to implements from this interface. But, the
- * programmer can haven't to do it.
+ * The Filters root interface int the PackageScanner framework. All
+ * filter must implements of this filter interface.
  *
  * @author Dong
- * @see io.github.mxudong.ps.scanners.ScannerInterface
- * @since 1.0.0
  */
 public interface FilterInterface {
 
+
     /**
-     * The filter shall judge whether it is allowed to pass according
-     * to the standard. This part has subclasses to specify specific
-     * implementation.
+     * Is the object will be filter. For method which required this
+     * interface, if the target object for every {@code FilterInterface.canBeFilter}
+     * are return false, the target object will not access.
+     *
+     * @param o the target object
+     * @return can be judge by canAccess
+     * @see #canAccess(Object)
+     */
+    boolean canBeFilter(Object o);
+
+    /**
+     * The filter shall judge weather it is allowed to pass according
+     * to the standard. This par has subclasses to specify specific
+     * implements.
      *
      * @param o target object
-     * @return if can pass return true, else return false
+     * @return if the object can be access
      */
-    boolean canPass(Object o);
+    boolean canAccess(Object o);
 }

@@ -12,7 +12,29 @@ import java.util.jar.JarEntry;
  * @since 1.0.0
  */
 
-public interface JarScannerFilterInterface extends FilterInterface{
+public interface JarScannerFilterInterface extends FilterInterface {
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param o the target object
+     * @return is the object will be filter
+     */
+    @Override
+    default boolean canBeFilter(Object o) {
+        return o instanceof JarEntry;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param o target object
+     * @return is the object can be acces
+     */
+    @Override
+    default boolean canAccess(Object o) {
+        return canBeFilter(o) && canAccessJar((JarEntry) o);
+    }
 
     /**
      * For jar fill, it will intercept all jar file.
@@ -20,5 +42,5 @@ public interface JarScannerFilterInterface extends FilterInterface{
      * @param jarEntry be judged jar file entity.
      * @return can be passed.
      */
-    boolean canAccess(JarEntry jarEntry);
+    boolean canAccessJar(JarEntry jarEntry);
 }
