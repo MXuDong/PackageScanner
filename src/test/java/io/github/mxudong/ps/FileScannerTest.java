@@ -1,6 +1,6 @@
 package io.github.mxudong.ps;
 
-import io.github.mxudong.ps.filters.DefaultClassFilter;
+import io.github.mxudong.ps.scanners.FileScanner;
 import org.junit.Test;
 
 import java.util.List;

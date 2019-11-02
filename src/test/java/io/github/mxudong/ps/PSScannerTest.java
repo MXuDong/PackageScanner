@@ -1,5 +1,6 @@
 package io.github.mxudong.ps;
 
+import io.github.mxudong.ps.scanners.FileScanner;
 import org.junit.Test;
 
 public class PSScannerTest {

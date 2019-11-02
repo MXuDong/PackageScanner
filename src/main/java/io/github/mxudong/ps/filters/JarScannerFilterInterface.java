@@ -1,22 +1,20 @@
 package io.github.mxudong.ps.filters;
 
+import io.github.mxudong.ps.scanners.JarScanner;
+
 import java.util.jar.JarEntry;
 
 /**
  * The jar entity for JarScanner.
  *
  * @author Dong
- * @see io.github.mxudong.ps.JarScanner
+ * @see JarScanner
  * @since 1.0.0
  */
 
-public interface JarScannerFilterInterface {
+public interface JarScannerFilterInterface extends FilterInterface{
 
     /**
-     * The filter shall judge weather it is allowed to pass according
-     * to the standard. This par has subclasses to specify specific
-     * implements.
-     * <p>
      * For jar fill, it will intercept all jar file.
      *
      * @param jarEntry be judged jar file entity.

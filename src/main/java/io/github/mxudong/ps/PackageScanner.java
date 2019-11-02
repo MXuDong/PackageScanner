@@ -25,7 +25,7 @@ public class PackageScanner {
      * <p>
      * If the target class in the Jar file. That jar file will be named
      * target jar. The packageScanner will scan all file which in the
-     * target jar. And the target class the package will use by filter.
+     * target jar.
      * <p>
      * This construction has no filter, because it use default filter,
      * and other construction can receive the filter.
@@ -36,4 +36,11 @@ public class PackageScanner {
     public PackageScanner(Class... targetClasses) {
 
     }
+}
+
+/**
+ * The inner class for PackageScanner scan the files.
+ */
+class JarScanner{
+
 }

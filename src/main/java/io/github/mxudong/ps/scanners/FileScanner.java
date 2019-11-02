@@ -1,4 +1,4 @@
-package io.github.mxudong.ps;
+package io.github.mxudong.ps.scanners;
 
 import io.github.mxudong.ps.filters.FileScannerFilterInterface;
 

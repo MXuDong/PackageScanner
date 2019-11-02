@@ -1,5 +1,7 @@
 package io.github.mxudong.ps.filters;
 
+import io.github.mxudong.ps.scanners.FileScanner;
+
 import java.io.File;
 
 /**
@@ -7,15 +9,11 @@ import java.io.File;
  *
  * @author Dong
  * @since 1.0.0
- * @see io.github.mxudong.ps.FileScanner
+ * @see FileScanner
  */
-public interface FileScannerFilterInterface {
+public interface FileScannerFilterInterface extends FilterInterface{
 
     /**
-     * The filter shall judge whether it is allowed to pass according
-     * to the standard. This part has subclasses to specify specific
-     * implementation.
-     *
      * For file, it can be directory, so this method can intercept the
      * directory. If not wish intercept the directory, the implement
      * must judge the file type.

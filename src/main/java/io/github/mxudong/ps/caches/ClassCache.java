@@ -8,5 +8,5 @@ package io.github.mxudong.ps.caches;
  * @since 1.0.0
  */
 
-public class ClassCaches {
+public class ClassCache {
 }
